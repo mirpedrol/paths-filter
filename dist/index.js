@@ -315,9 +315,9 @@
             if (branch) {
               return branch;
             }
-            branch = (await exec_1.getExecOutput('git', ['rev-parse', '--abbrev-ref', exports.HEAD])).stdout.trim();
-            if (branch) {
-              return branch;
+            const head_branch = (await exec_1.getExecOutput('git', ['rev-parse', '--abbrev-ref', exports.HEAD])).stdout.trim();
+            if (head_branch) {
+              return head_branch;
             }
             const describe = await exec_1.getExecOutput('git', ['describe', '--tags', '--exact-match'], { ignoreReturnCode: true });
             if (describe.exitCode === 0) {
