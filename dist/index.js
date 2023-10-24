@@ -315,15 +315,12 @@
             if (branch) {
               return branch;
             }
-            const head_branch = (await exec_1.getExecOutput('git', ['name-rev', '--name-only', exports.HEAD])).stdout.trim();
-            if (head_branch) {
-              return head_branch;
-            }
             const describe = await exec_1.getExecOutput('git', ['describe', '--tags', '--exact-match'], { ignoreReturnCode: true });
             if (describe.exitCode === 0) {
               return describe.stdout.trim();
             }
-            return (await exec_1.getExecOutput('git', ['rev-parse', exports.HEAD])).stdout.trim();
+            const github_sha = await exec_1.getExecOutput('git', ['rev-parse', exports.HEAD]).stdout.trim();
+            return (await exec_1.getExecOutput('git', ['rev-parse', `${github_sha}^2`])).stdout.trim();
           }
           finally {
             core.endGroup();

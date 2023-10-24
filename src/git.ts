@@ -170,17 +170,13 @@ export async function getCurrentRef(): Promise<string> {
     if (branch) {
       return branch
     }
-    const head_branch = (await getExecOutput('git', ['name-rev', '--name-only', HEAD])).stdout.trim()
-    if (head_branch) {
-      return head_branch
-    }
 
     const describe = await getExecOutput('git', ['describe', '--tags', '--exact-match'], {ignoreReturnCode: true})
     if (describe.exitCode === 0) {
       return describe.stdout.trim()
     }
-
-    return (await getExecOutput('git', ['rev-parse', HEAD])).stdout.trim()
+    const github_sha = await getExecOutput('git', ['rev-parse', HEAD]).stdout.trim()
+    return (await getExecOutput('git', ['rev-parse', `${github_sha}^2`])).stdout.trim()
   } finally {
     core.endGroup()
   }
