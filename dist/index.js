@@ -315,6 +315,10 @@
             if (branch) {
               return branch;
             }
+            branch = (await exec_1.getExecOutput('git', ['rev-parse', '--abbrev-ref', exports.HEAD])).stdout.trim();
+            if (branch) {
+              return branch;
+            }
             const describe = await exec_1.getExecOutput('git', ['describe', '--tags', '--exact-match'], { ignoreReturnCode: true });
             if (describe.exitCode === 0) {
               return describe.stdout.trim();
@@ -1297,8 +1301,8 @@
               const res = yield httpclient
                 .getJson(id_token_url)
                 .catch(error => {
-                  throw new Error(`Failed to get ID Token. \n 
-        Error Code : ${error.statusCode}\n 
+                  throw new Error(`Failed to get ID Token. \n
+        Error Code : ${error.statusCode}\n
         Error Message: ${error.result.message}`);
                 });
               const id_token = (_a = res.result) === null || _a === void 0 ? void 0 : _a.value;
