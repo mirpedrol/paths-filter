@@ -315,7 +315,7 @@
             if (branch) {
               return branch;
             }
-            const head_branch = (await exec_1.getExecOutput('git', ['rev-parse', '--abbrev-ref', exports.HEAD])).stdout.trim();
+            const head_branch = (await exec_1.getExecOutput('git', ['name-rev', '--name-only', exports.HEAD])).stdout.trim();
             if (head_branch) {
               return head_branch;
             }

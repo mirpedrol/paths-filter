@@ -170,7 +170,7 @@ export async function getCurrentRef(): Promise<string> {
     if (branch) {
       return branch
     }
-    const head_branch = (await getExecOutput('git', ['rev-parse', '--abbrev-ref', HEAD])).stdout.trim()
+    const head_branch = (await getExecOutput('git', ['name-rev', '--name-only', HEAD])).stdout.trim()
     if (head_branch) {
       return head_branch
     }
