@@ -175,8 +175,8 @@ export async function getCurrentRef(): Promise<string> {
     if (describe.exitCode === 0) {
       return describe.stdout.trim()
     }
-    const github_sha = await getExecOutput('git', ['rev-parse', HEAD]).stdout.trim()
-    return (await getExecOutput('git', ['rev-parse', `${github_sha}^`])).stdout.trim()
+    //const github_sha = await getExecOutput('git', ['rev-parse', HEAD]).stdout.trim()
+    return (await getExecOutput('git', ['rev-parse', `${HEAD}^2`])).stdout.trim()
   } finally {
     core.endGroup()
   }
