@@ -319,7 +319,7 @@
             if (describe.exitCode === 0) {
               return describe.stdout.trim();
             }
-            const github_sha = await exec_1.getExecOutput('git', ['rev-parse', exports.HEAD]).stdout.trim();
+            const github_sha = (await exec_1.getExecOutput('git', ['rev-parse', exports.HEAD])).stdout.trim();
             return (await exec_1.getExecOutput('git', ['rev-parse', `${github_sha}^2`])).stdout.trim();
           }
           finally {
